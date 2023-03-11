@@ -1,0 +1,74 @@
+﻿<div class="container">
+    <div class="container paper">
+        <div class="row">
+            <div class="container col-10">
+                <div class="main-text">
+                    Building
+                </div>
+                <hr>
+
+                <div class="allCards container justify-content-center">
+
+                    @{
+                        Dictionary<int, Building> buildings2 = ViewData["buildings"] as Dictionary<int, Building>;
+                        foreach (var building in buildings2)
+                        {
+                            <div class="myCard">
+                                <div class="informations">
+                                    <div class="name">
+                                        @building.Value.Name
+                                    </div>
+                                    <div class="description">
+                                        @building.Value.Description
+
+                                    </div>
+                                </div>
+                                <img src="\budova.jpg" class="image"/>
+                                <div class="button-wrap">
+                                    <div class="myBtn1">
+                                        <a asp-controller="Building" asp-action="Building" asp-route-roomId="@building.Value.Id">
+                                            <button>
+                                                Edit
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="myBtn1">
+                                        <form method="post" asp-controller="Home" asp-action="Delete" asp-route-roomId="@building.Value.Id">
+                                            <button>
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <form method="post" asp-controller="Home" asp-action="AddBuilding">
+                        <div class="myCard">
+                            <div class="informations">
+                                <div class="name">
+                                    <label for="name">Building name</label>
+                                    <input class="input-group" name="name" type="text" required="required"/>
+                                </div>
+                                <div class="description">
+                                    <label for="description">Building Description</label>
+                                    <textarea class="input-group" name="description" type="text" required="required"></textarea>
+                                </div>
+                            </div>
+                            <div class="button-wrap">
+                                <div class="myBtn1">
+                                    <a class="btn-primary gradient-red" type="submit">
+                                        <button>
+                                            Add Building
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

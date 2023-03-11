@@ -1,0 +1,100 @@
+﻿<div class="container">
+    <div class="container paper">
+        <div class="row">
+            <div class="container col-10 d-flex flex-column align-items-center">
+                    @{
+                        if (ViewData["InvalidMeeting"] != null && Boolean.Parse(ViewData["InvalidMeeting"].ToString()))
+                        {
+                            <div class="alert-danger">INVALID MEETING TIME!</div>
+                        }
+                    }
+                <div class="main-text">
+                    Room @ViewData["room_name"]- meetings
+                </div>
+                <hr>
+                <div class="mainForm">
+                    <form method="post" asp-controller="Room" asp-action="UpdateRoom" asp-route-roomId="@ViewData["room_id"]">
+                        <label for="roomName">Room name</label>
+                        <input class="input-group" name="roomName" type="text" required="required" value="@ViewData["room_name"]"/>
+                        <label for="roomDescription">Room Description</label>
+                        <textarea class="input-group" name="roomDescription" type="text" required="required">@ViewData["room_description"]</textarea>
+                        <div class="myBtn1 d-flex justify-content-end">
+                            <button class="mt-4">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="allCards container">
+                    @{
+                        Dictionary<int, Meeting> meetings = ViewData["meetings"] as Dictionary<int, Meeting>;
+                        foreach (var meeting in meetings)
+                        {
+                            <div class="myCard">
+                                <div class="informations">
+                                    <div class="name">
+                                        @meeting.Value.Name
+                                    </div>
+                                    <div class="description">
+                                        @meeting.Value.Description
+                                    </div>
+                                    <div class="time">
+                                        FROM: @meeting.Value.NormalizeDateTime(meeting.Value.From)
+                                    </div>
+                                    <div class="time">
+                                        TO: @meeting.Value.NormalizeDateTime(meeting.Value.To)
+                                    </div>
+                                </div>
+                                <img src="\meeting.jpg" class="image"/>
+                                <div class="button-wrap">
+                                    <div class="myBtn1">
+                                        <a asp-controller="Meeting" asp-action="Meeting" asp-route-meetingId="@meeting.Value.Id">
+                                            <button>
+                                                Edit
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="myBtn1">
+                                        <form method="post" asp-controller="Room" asp-action="DeleteMeeting" asp-route-meetingId="@meeting.Value.Id">
+                                            <button>
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <form method="post" asp-controller="Room" asp-action="AddMeeting" asp-route-roomId="@ViewData["room_id"]">
+                        <div class="myCard">
+                            <div class="informations">
+                                <div class="name">
+                                    <label for="meetingName">Meeting name</label>
+                                    <input class="input-group" name="meetingName" type="text" required="required"/>
+                                </div>
+                                <div class="description">
+                                    <label for="meetingDescription">Meeting description</label>
+                                    <textarea class="input-group" name="meetingDescription" type="text" required="required"></textarea>
+                                </div>
+                                <div class="time">
+                                    <label for="from">From</label>
+                                    <input class="input-group" name="from" type="datetime-local" required="required"/>
+                                    <label for="to">To</label>
+                                    <input class="input-group" name="to" type="datetime-local" required="required"/>
+                                </div>
+                            </div>
+
+                            <div class="button-wrap">
+                                <div class="myBtn1">
+                                    <button>
+                                        Add Meeting
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

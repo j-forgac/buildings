@@ -1,0 +1,36 @@
+﻿<div class="container">
+    <div class="container paper">
+        <div class="row">
+            <div class="container col-10 d-flex flex-column align-items-center">
+                @{
+                    if (ViewData["InvalidMeeting"] != null && Boolean.Parse(ViewData["InvalidMeeting"].ToString()))
+                    {
+                        <div class="alert-danger">INVALID MEETING TIME!</div>
+                    }
+                }
+                <div class="main-text">
+                    Room @ViewData["meeting_name"]- meetings
+                    TEST: @ViewData["meeting_from"]
+                </div>
+                <hr>
+                <div class="mainForm">
+                    <form method="post" asp-controller="Meeting" asp-action="UpdateMeeting" asp-route-meetingId="@ViewData["meeting_id"]">
+                        <label for="meetingName">Room name</label>
+                        <input class="input-group" name="meetingName" type="text" required="required" value="@ViewData["meeting_name"]"/>
+                        <label for="meetingDescription">Room Description</label>
+                        <textarea class="input-group" name="meetingDescription" type="text" required="required">@ViewData["meeting_description"]</textarea>
+                        <label for="from">From</label>
+                        <input class="input-group" name="from" type="datetime-local" required="required" value="@ViewData["meeting_from"]"/>
+                        <label for="to">To</label>
+                        <input class="input-group" name="to" type="datetime-local" required="required" value="@ViewData["meeting_to"]"/>
+                        <div class="myBtn1 d-flex justify-content-end">
+                            <button class="mt-4">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

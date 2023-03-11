@@ -1,0 +1,83 @@
+﻿<div class="container">
+    <div class="container paper">
+        <div class="row">
+            <div class="container col-10 d-flex flex-column align-items-center">
+                <div class="main-text">
+                    Building @ViewData["building_name"]- rooms
+                </div>
+                <hr>
+                <div class="mainForm">
+                    <form method="post" asp-controller="Building" asp-action="UpdateBuilding" asp-route-roomId="@ViewData["building_id"]">
+                        <label for="buildingName">Building name</label>
+                        <input class="input-group" name="buildingName" type="text" required="required" value="@ViewData["building_name"]"/>
+                        <label for="buildingDescription">Building Description</label>
+                        <textarea class="input-group" name="buildingDescription" type="text" required="required">@ViewData["building_description"]</textarea>
+                        <div class="myBtn1 d-flex justify-content-end">
+                            <button class="mt-4">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="allCards container">
+                    @{
+                        Dictionary<int, Room> rooms = ViewData["rooms"] as Dictionary<int, Room>;
+                        foreach (var room in rooms)
+                        {
+                            <div class="myCard">
+                                <div class="informations">
+                                    <div class="name">
+                                        @room.Value.Name
+                                    </div>
+                                    <div class="description">
+                                        @room.Value.Description
+
+                                    </div>
+                                </div>
+                                <img src="\room.jpg" class="image"/>
+                                <div class="button-wrap">
+                                    <div class="myBtn1">
+                                        <a asp-controller="Room" asp-action="Room" asp-route-roomId="@room.Value.Id">
+                                            <button>
+                                                Edit
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="myBtn1">
+                                        <form method="post" asp-controller="Building" asp-action="DeleteRoom" asp-route-roomId="@room.Value.Id">
+                                            <button>
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <form method="post" asp-controller="Building" asp-action="AddRoom" asp-route-roomId="@ViewData["building_id"]">
+                        <div class="myCard">
+                            <div class="informations">
+                                <div class="name">
+                                    <label for="roomName">Room name</label>
+                                    <input class="input-group" name="roomName" type="text" required="required"/>
+                                </div>
+                                <div class="description">
+                                    <label for="roomDescription">Room Description</label>
+                                    <textarea class="input-group" name="roomDescription" type="text" required="required"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="button-wrap">
+                                <div class="myBtn1">
+                                    <button>
+                                        Add Room
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
